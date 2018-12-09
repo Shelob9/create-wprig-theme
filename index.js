@@ -1,6 +1,7 @@
 const program = require('commander');
 const path = require( 'path' );
-const UPSTREAM = 'https://github.com/shelob9/wprig/blob/feature/228';
+const UPSTREAM_URL = 'https://github.com/shelob9/wprig'; //should be https://github.com/wprig/wprig
+const UPSTREAM_BRANCH = 'feature/228'; //should be 'v2.0'
 const fs = require( 'fs' );
 
 program
@@ -16,16 +17,23 @@ program
 			fs.mkdirSync(dir);
 		}
 
-		const makeConfig = require( './modules/makeConfig');
-		makeConfig(dir,slug);
 		const git = require('simple-git')(dir);
+
+
 		git
 			.init()
-			.addRemote( 'upstream', UPSTREAM )
+			.addRemote( 'upstream', UPSTREAM_URL )
 			.addRemote('origin', gitUrl )
-			.pull('upstream', 'v2.0', (r) => console.log(r))
-			.push('origin', 'master');
-
+			.pull('upstream', UPSTREAM_BRANCH )
+			.push('origin', 'master', () => {
+				console.log( 'Repo created and pushed.' );
+				const makeConfig = require( './modules/makeConfig');
+				makeConfig( dir, slug );
+				git
+					.add('./*')
+					.commit("Add custom config")
+					.push( 'origin', 'master' );
+			});
 	});
 
 program.parse(process.argv);
