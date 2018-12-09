@@ -1,6 +1,6 @@
 const program = require('commander');
 const path = require( 'path' );
-const UPSTREAM = 'https://github.com/wprig/wprig/';
+const UPSTREAM = 'https://github.com/shelob9/wprig/blob/feature/228';
 const fs = require( 'fs' );
 
 program
