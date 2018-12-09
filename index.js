@@ -16,6 +16,8 @@ program
 			fs.mkdirSync(dir);
 		}
 
+		const makeConfig = require( './modules/makeConfig');
+		makeConfig(dir,slug);
 		const git = require('simple-git')(dir);
 		git
 			.init()
