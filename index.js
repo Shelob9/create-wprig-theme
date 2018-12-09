@@ -23,7 +23,7 @@ program
 			.init()
 			.addRemote( 'upstream', UPSTREAM )
 			.addRemote('origin', gitUrl )
-			.pull('upstream', 'master', (r) => console.log(r))
+			.pull('upstream', 'v2.0', (r) => console.log(r))
 			.push('origin', 'master');
 
 	});
